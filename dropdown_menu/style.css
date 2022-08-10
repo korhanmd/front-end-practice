@@ -1,4 +1,10 @@
+body {
+  background: blue;
+}
+
 .menu {
+  margin: 0 auto;
+  width: 40rem;
   background: #F7F6F5;
   border-top: 1px solid #CFCFCF;
 }
@@ -34,4 +40,10 @@
 .menu__main__item__link:hover {
   text-decoration: underline;
   color: #1C60BB;
+}
+
+.menu__sub {
+  width: 40rem;
+  height: 10rem;
+  background: red;
 }
