@@ -8,9 +8,14 @@ function hideSubmenu() {
 	submenu.style.display = "none";
 }
 
+function onMenuItemMouseEnter(item) {
+	item.classList.add("menu__main__item--active");
+	showSubmenu();
+}
+
 const menuItems = document.getElementsByClassName("menu__main__item");
 for (const menuItem of menuItems) {
-	menuItem.onmouseenter = showSubmenu;
+	menuItem.onmouseenter = () => onMenuItemMouseEnter(menuItem);
 }
 
 const menu = document.getElementsByClassName("menu")[0];
