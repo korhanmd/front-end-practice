@@ -8,7 +8,14 @@ function hideSubmenu() {
 	submenu.style.display = "none";
 }
 
+let active = null;
+
 function onMenuItemMouseEnter(item) {
+	if (active) {
+		active.classList.remove("menu__main__item--active");
+	}
+
+	active = item;
 	item.classList.add("menu__main__item--active");
 	showSubmenu();
 }
