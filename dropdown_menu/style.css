@@ -32,16 +32,6 @@ body {
   border-bottom: 1px solid var(--border-grey);
 }
 
-.menu__main__item:first-child:hover {
-  border-left: none;
-  margin-left: 0;
-}
-
-.menu__main__item:last-child:hover {
-  border-right: none;
-  margin-right: 0;
-}
-
 .menu__main__item:hover {
   background: white;
   border-bottom: none;
