@@ -1,6 +1,29 @@
+const HOST = 'server.com/';
+
+function populateCategories(category) {
+	api.get(HOST + 'categories', {category}, function(categories) {
+		let newCategories = '';
+		for (const category of categories) {
+			const categoryElement = `
+				<li class="menu__sub__categories__item">
+					<a href="#" class="menu__sub__categories__item__link">${category}</a>
+				</li>
+			`;
+
+			newCategories += categoryElement;
+		}
+
+		const categoriesElement = document.getElementsByClassName(`menu__sub__categories__items--${category}`)[0];
+		categoriesElement.innerHTML = newCategories;
+	});
+}
+
 function showSubmenu() {
 	const submenu = document.getElementsByClassName("menu__sub")[0];
 	submenu.style.display = "block";
+
+	populateCategories('top');
+	populateCategories('additional');
 }
 
 function hideSubmenu() {
