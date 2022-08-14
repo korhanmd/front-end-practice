@@ -52,6 +52,15 @@ for (const menuItem of menuItems) {
 const menu = document.getElementsByClassName("menu")[0];
 menu.onmouseleave = hideSubmenu;
 
+function deactivateMenuItem() {
+  if (activeMenuItem) {
+    activeMenuItem.classList.remove("menu__main__item--active");
+  }
+}
+ 
+const submenu = document.getElementsByClassName("menu__sub")[0];
+submenu.onmouseleave = deactivateMenuItem;
+
 // Server
 
 function getCategories(data) {
@@ -102,7 +111,7 @@ function getCategories(data) {
 				'New arrivals'
 			];
 		}
-		
+
 		return [
 			'Server square',
 			'Server cirlce',
