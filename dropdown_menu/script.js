@@ -27,3 +27,44 @@ for (const menuItem of menuItems) {
 
 const menu = document.getElementsByClassName("menu")[0];
 menu.onmouseleave = hideSubmenu;
+
+// Server
+
+function getCategories(data) {
+	if (data.category == 'top') {
+		return [
+			'Server apple',
+			'Server banana',
+			'Server pear',
+			'Server orange'
+		];
+	}
+
+	if (data.category == 'additional') {
+		return [
+			'Server square',
+			'Server cirlce',
+			'Server oval',
+			'Server diamond'
+		];
+	}
+
+	return [];
+}
+
+const endpoints = {
+	"/categories": {
+		"get": getCategories
+	}
+}
+
+function getFunction(url, data, callback) {
+	const domain = url.substring(0, url.indexOf("/"));
+	const endpoint = url.substring(url.indexOf("/"), url.length);
+
+	callback(endpoints[endpoint]["get"](data));
+}
+
+const api = {
+	get: getFunction
+};
