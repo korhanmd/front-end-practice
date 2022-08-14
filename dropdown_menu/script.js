@@ -1,7 +1,8 @@
 const HOST = 'server.com/';
 
 function populateCategories(category) {
-	api.get(HOST + 'categories', {category}, function(categories) {
+	const activeMenuItemName = activeMenuItem.children[0].innerHTML;
+	api.get(HOST + 'categories', {category, menuItem: activeMenuItemName}, function(categories) {
 		let newCategories = '';
 		for (const category of categories) {
 			const categoryElement = `
@@ -31,14 +32,14 @@ function hideSubmenu() {
 	submenu.style.display = "none";
 }
 
-let active = null;
+let activeMenuItem = null;
 
 function onMenuItemMouseEnter(item) {
-	if (active) {
-		active.classList.remove("menu__main__item--active");
+	if (activeMenuItem) {
+		activeMenuItem.classList.remove("menu__main__item--active");
 	}
 
-	active = item;
+	activeMenuItem = item;
 	item.classList.add("menu__main__item--active");
 	showSubmenu();
 }
@@ -55,6 +56,25 @@ menu.onmouseleave = hideSubmenu;
 
 function getCategories(data) {
 	if (data.category == 'top') {
+		if (data.menuItem == 'Motors') {
+			return [
+				'Car',
+				'Motorcycle',
+				'Plane',
+				'Trucks',
+				'Wheels'
+			];
+		}
+
+		if (data.menuItem == 'Fashion') {
+			return [
+				'Women\'s tops',
+				'Men\'s tops',
+				'Jeans',
+				'Hats'
+			];
+		}
+
 		return [
 			'Server apple',
 			'Server banana',
@@ -64,6 +84,25 @@ function getCategories(data) {
 	}
 
 	if (data.category == 'additional') {
+		if (data.menuItem == 'Motors') {
+			return [
+				'Tires',
+				'windshields',
+				'Ski racks',
+				'Doors',
+				'windows'
+			];
+		}
+
+		if (data.menuItem == 'Fashion') {
+			return [
+				'On sale',
+				'Red stuff',
+				'Gucci',
+				'New arrivals'
+			];
+		}
+		
 		return [
 			'Server square',
 			'Server cirlce',
