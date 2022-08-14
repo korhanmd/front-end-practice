@@ -10,11 +10,27 @@ function displayText(response) {
 
 // Server
 
-const endpoints = {
-  "/": {
-    "get": "hello world"
+function getMenus(data) {
+  switch (data.menu) {
+    case "a":
+      return "I got an A";
+    case "b":
+      return "I got a B";
+    default:
+      return "I don't know what I got";
   }
 }
+
+const endpoints = {
+  "/": {
+    "get": () => "hello world"
+  },
+  "/menus": {
+    "get": getMenus
+  }
+}
+
+// API library
 
 function getFunction(url, data, callback) {
   const domain = url.substring(0, url.indexOf("/"));
