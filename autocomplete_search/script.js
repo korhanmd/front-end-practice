@@ -9,9 +9,21 @@ searchInput.oninput = onNewInput;
 
 // Server
 
+function getAutocompleteHandler(data) {
+	const results = [];
+	for (let i = 0; i < 10; i++) {
+		results.push("asdf");
+	}
+	return results;
+}
+
 const endpoints = {
 	"/": {
 		"get": () => "hello world"
+	},
+
+	"/autocomplete": {
+		"get": getAutocompleteHandler
 	}
 }
 
