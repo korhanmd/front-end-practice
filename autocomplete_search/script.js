@@ -16,9 +16,13 @@ searchInput.oninput = onNewInput;
 // Server
 
 function getAutocompleteHandler(data) {
+	const NUM_AUTOCOMPLETE_RESULTS = 10;
 	const results = [];
-	for (let i = 0; i < 10; i++) {
-		results.push("asdf");
+	for (let i = 0; i < NUM_AUTOCOMPLETE_RESULTS; i++) {
+		results.push({
+			suggestion: data + "asdf",
+			auxiliary: "asdf"
+		});
 	}
 	return results;
 }
