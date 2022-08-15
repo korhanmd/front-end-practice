@@ -1,8 +1,14 @@
+const HOST = 'server.com/';
+
 const searchInput = document.getElementsByClassName('search__bar__input')[0];
 
-function onNewInput(event) {
+function onSuggestionsResponse(data) {
 	const suggestionsElement = document.getElementsByClassName('search__suggestions__list')[0];
-	suggestionsElement.innerHTML += (searchInput.value + '<br>');
+	suggestionsElement.innerHTML += (data + '<br>');
+}
+
+function onNewInput(event) {
+	api.get(HOST + 'autocomplete', searchInput.value, onSuggestionsResponse);
 }
 
 searchInput.oninput = onNewInput;
