@@ -51,16 +51,20 @@
 	padding-left: 1rem;
 }
 
-.search__suggestions__list__result:last-child {
-	border-bottom: 1px solid var(--light-grey);
-}
-
 .search__suggestions__list__result:hover {
 	background: var(--item-hover-grey);
 }
 
 .search__actions {
+	margin-top: 2rem;
 	text-align: center;
+}
+
+.search__actions--autosuggest {
+	margin: 0;
+	border: 1px solid var(--light-grey);
+	border-top: 0;
+	padding: 1rem 0 0.1rem 0;
 }
 
 .search__actions__action {
@@ -69,7 +73,6 @@
 	font-weight: bold;
 	font-family: Arial;
 	color: var(--button-grey);
-	margin-top: 2rem;
 	background: var(--button-bg-grey);
 	padding: 0.4rem 2rem;
 }
