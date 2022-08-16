@@ -1,0 +1,15 @@
+.search {
+	width: 36rem;
+	margin: 0 auto;
+	margin-top: 5rem;
+	background: blue;
+}
+
+.search__bar__input {
+	width: calc(100% - 1.9rem);
+	padding: 0.8rem;
+}
+
+.search__actions {
+	text-align: center;
+}
