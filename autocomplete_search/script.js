@@ -2,9 +2,22 @@ const HOST = 'server.com/';
 
 const searchInput = document.getElementsByClassName('search__bar__input')[0];
 
+function wrapBoldedCharacters({inputValue, suggestion}) {
+	if (suggestion.startsWith(inputValue)) {
+		return `${suggestion.substring(0, inputValue.length)}<b>${suggestion.substring(inputValue.length, suggestion.length)}</b>`;
+	}
+
+	return `<b>${suggestion}</b>`;
+}
+
 function createSuggestionElement({suggestion, auxiliaryData}) {
-	const auxiliaryString = auxiliaryData ? ' - ${auxiliaryData}' : "";
-	return `<li class="search__suggestions__list__result">${suggestion}${auxiliaryString}</li>`;
+	const auxiliaryString = auxiliaryData ? ` - ${auxiliaryData}` : "";
+	const boldProcessedSuggestion = wrapBoldedCharacters({
+		inputValue: searchInput.value,
+		suggestion
+	});
+
+	return `<li class="search__suggestions__list__result">${boldProcessedSuggestion}${auxiliaryString}</li>`;
 }
 
 function onSuggestionsResponse(data) {
