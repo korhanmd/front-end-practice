@@ -3,6 +3,7 @@
 	--item-hover-grey: #E6E6E6;
 	--button-grey: #757575;
 	--button-bg-grey: #f1f1f1;
+	--microphone-width: 1.5rem;
 }
 
 .search {
@@ -12,11 +13,23 @@
 	font-family: Arial;
 }
 
+.search__bar {
+	position: relative;
+}
+
 .search__bar__input {
-	width: calc(100% - 1.9rem);
+	width: calc(100% - 2.6rem);
 	padding: 0.6rem;
+	padding-right: calc(var(--microphone-width) + 0.6rem);
 	font-size: 16px;
 	font-family: Arial;
+}
+
+.search__bar__microphone {
+	width: var(--microphone-width);
+	position: absolute;
+	right: 0;
+	top: 0.6rem;
 }
 
 .search__suggestions {
@@ -58,4 +71,5 @@
 	color: var(--button-grey);
 	margin-top: 2rem;
 	background: var(--button-bg-grey);
+	padding: 0.4rem 2rem;
 }
