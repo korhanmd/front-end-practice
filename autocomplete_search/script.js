@@ -59,11 +59,17 @@ function getAutocompleteHandler(data) {
 	while (results.length < NUM_AUTOCOMPLETE_RESULTS) {
 		const suggestion = generateSuggestion(data);
 
+		if (results.find(result => result.suggestion === suggestion)) {
+			continue;
+		}
+
 		if (Math.random() < RATIO_AUXILIARY_DATA) {
-			results.push({
-				suggestion,
-				auxiliary: getRandomString({length: getRandomInteger({min: 5, max: 15})})
-			});
+			for (let i = 0; i < 2; i++) {
+				results.push({
+					suggestion,
+					auxiliary: getRandomString({length: getRandomInteger({min: 5, max: 15})})
+				});
+			}
 		} else {
 			results.push({suggestion, auxiliary: ""});
 		}
