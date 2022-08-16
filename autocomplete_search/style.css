@@ -49,3 +49,13 @@
 .search__actions {
 	text-align: center;
 }
+
+.search__actions__action {
+	height: 2rem;
+	font-size: 13px;
+	font-weight: bold;
+	font-family: Arial;
+	color: var(--button-grey);
+	margin-top: 2rem;
+	background: var(--button-bg-grey);
+}
