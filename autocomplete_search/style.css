@@ -1,13 +1,37 @@
+:root {
+	--light-grey:  #ccc;
+	--item-hover-grey: #E6E6E6;
+}
+
 .search {
 	width: 36rem;
 	margin: 0 auto;
 	margin-top: 5rem;
-	background: blue;
 }
 
 .search__bar__input {
 	width: calc(100% - 1.9rem);
 	padding: 0.8rem;
+}
+
+.search__suggestions {
+	border: 0.5px solid var(--light-grey);
+	border-top: 0;
+}
+
+.search__suggestions__list {
+	line-height: 1.5;
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+.search__suggestions__list__result {
+	padding-left: 1rem;
+}
+
+.search__suggestions__list__result:hover {
+	background: var(--item-hover-grey);
 }
 
 .search__actions {
