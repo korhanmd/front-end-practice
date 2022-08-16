@@ -1,6 +1,8 @@
 const HOST = 'server.com/';
 
 const searchInput = document.getElementsByClassName('search__bar__input')[0];
+const suggestionsElement = document.getElementsByClassName('search__suggestions__list')[0];
+const actionsElement = document.getElementsByClassName('search__actions')[0];
 
 function wrapBoldedCharacters({inputValue, suggestion}) {
 	if (suggestion.startsWith(inputValue)) {
@@ -21,7 +23,6 @@ function createSuggestionElement({suggestion, auxiliaryData}) {
 }
 
 function onSuggestionsResponse(data) {
-	const suggestionsElement = document.getElementsByClassName('search__suggestions__list')[0];
 	let suggestionsHTML = "";
 
 	for (const suggestion of data) {
@@ -32,10 +33,21 @@ function onSuggestionsResponse(data) {
 	}
 
 	suggestionsElement.innerHTML = suggestionsHTML;
+
+	if (suggestionsHTML) {
+		actionsElement.classList.add('search__actions--autosuggest');
+	} else {
+		actionsElement.classList.remove('search__actions--autosuggest');
+	}
 }
 
 function onNewInput(event) {
-	api.get(HOST + 'autocomplete', searchInput.value, onSuggestionsResponse);
+	if (searchInput.value) {
+		api.get(HOST + 'autocomplete', searchInput.value, onSuggestionsResponse);
+	} else {
+		suggestionsElement.innerHTML = '';
+		actionsElement.classList.remove('search__actions--autosuggest');
+	}
 }
 
 searchInput.oninput = onNewInput;
