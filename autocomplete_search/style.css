@@ -1,22 +1,30 @@
 :root {
 	--light-grey:  #ccc;
 	--item-hover-grey: #E6E6E6;
+	--button-grey: #757575;
+	--button-bg-grey: #f1f1f1;
 }
 
 .search {
 	width: 36rem;
 	margin: 0 auto;
 	margin-top: 5rem;
+	font-family: Arial;
 }
 
 .search__bar__input {
 	width: calc(100% - 1.9rem);
-	padding: 0.8rem;
+	padding: 0.6rem;
+	font-size: 16px;
+	font-family: Arial;
 }
 
 .search__suggestions {
 	border: 0.5px solid var(--light-grey);
 	border-top: 0;
+	border-bottom: 0;
+	font-size: 16px;
+	font: Arial;
 }
 
 .search__suggestions__list {
@@ -28,6 +36,10 @@
 
 .search__suggestions__list__result {
 	padding-left: 1rem;
+}
+
+.search__suggestions__list__result:last-child {
+	border-bottom: 1px solid var(--light-grey);
 }
 
 .search__suggestions__list__result:hover {
