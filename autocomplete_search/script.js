@@ -3,6 +3,8 @@ const HOST = 'server.com/';
 const searchInput = document.getElementsByClassName('search__bar__input')[0];
 const suggestionsElement = document.getElementsByClassName('search__suggestions__list')[0];
 const actionsElement = document.getElementsByClassName('search__actions')[0];
+const searchElement = document.getElementsByClassName('search')[0];
+const searchBarElement = document.getElementsByClassName('search__bar')[0];
 
 function wrapBoldedCharacters({inputValue, suggestion}) {
 	if (suggestion.startsWith(inputValue)) {
@@ -36,8 +38,12 @@ function onSuggestionsResponse(data) {
 
 	if (suggestionsHTML) {
 		actionsElement.classList.add('search__actions--autosuggest');
+		searchElement.classList.add('search--autosuggest');
+		searchBarElement.classList.add('search__bar--autosuggest');
 	} else {
 		actionsElement.classList.remove('search__actions--autosuggest');
+		searchElement.classList.remove('search--autosuggest');
+		searchBarElement.classList.remove('search__bar--autosuggest');
 	}
 }
 
@@ -47,6 +53,8 @@ function onNewInput(event) {
 	} else {
 		suggestionsElement.innerHTML = '';
 		actionsElement.classList.remove('search__actions--autosuggest');
+		searchElement.classList.remove('search--autosuggest');
+		searchBarElement.classList.remove('search__bar--autosuggest');
 	}
 }
 
