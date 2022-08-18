@@ -32,7 +32,11 @@ document.onmouseup = () => {
 
 	const rangeRect = selection.getRangeAt(0).getClientRects()[0];
 	
-	toolTip.style.left = `${rangeRect.x + (rangeRect.width/2)}px`;
-	toolTip.style.top = `${rangeRect.y}px`;
 	document.body.appendChild(toolTip);
+	const toolTipWidth = toolTip.offsetWidth;
+	const toolTipHeight = toolTip.offsetHeight;
+	const y = rangeRect.y;
+	const middleX = rangeRect.x + (rangeRect.width/2);
+	toolTip.style.top = `${y - toolTipHeight}px`;
+	toolTip.style.left = `${middleX - toolTipWidth/2}px`;
 }
