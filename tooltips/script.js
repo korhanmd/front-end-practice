@@ -21,7 +21,19 @@ toolTip.innerHTML = svgs;
 const toolTipTail = document.createElement("div");
 toolTipTail.classList.add("tooltip__tail");
 
-document.onmouseup = () => {
+let mouseDownData = {};
+const articleElement = document.getElementsByClassName("article")[0];
+
+articleElement.onmousedown = (event) => {
+	mouseDownData.x = event.clientX;
+	mouseDownData.y = event.clientY;
+}
+
+articleElement.onmouseup = (event) => {
+	if (event.clientX === mouseDownData.x && event.clientY === mouseDownData.y) {
+		return;
+	}
+	
 	const selection = document.getSelection();
 	const anchorNode = selection.anchorNode;
 	const focusNode = selection.focusNode;
