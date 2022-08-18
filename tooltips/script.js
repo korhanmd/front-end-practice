@@ -73,6 +73,8 @@ function displayTooltip() {
 document.onmouseup = () => {
 	if (selectionQueued) {
 		displayTooltip();
+	} else {
+		removeTooltip();
 	}
 
 	selectionQueued = false;
@@ -82,12 +84,13 @@ document.addEventListener("selectionchange", function(event) {
 	const selection = document.getSelection();
 
 	if (selection.type !== "Range") {
-		removeTooltip();
+		selectionQueued = false;
 		return;
 	}
 
 	if (selection.anchorNode != selection.focusNode) {
 		// Cross-paragraph selection
+		selectionQueued = false;
 		return;
 	}
 
