@@ -23,15 +23,33 @@ toolTipTail.classList.add("tooltip__tail");
 
 const articleElement = document.getElementsByClassName("article")[0];
 
-articleElement.onmouseup = (event) => {
+const mousedownData = {x: null, y: null};
+
+articleElement.onmousedown = (event) => {
+	mousedownData.x = event.clientX;
+	mousedownData.y = event.clientY;
+}
+
+function removeTooltip() {
+	if (document.body.contains(toolTip)) {
+		document.body.removeChild(toolTip);
+		document.body.removeChild(toolTipTail);
+	}
+}
+
+function addTooltip() {
+	document.body.appendChild(toolTip);
+	document.body.appendChild(toolTipTail);
+}
+
+document.addEventListener("selectionchange", function(event) {
 	const selection = document.getSelection();
 
 	if (selection.type !== "Range") {
-		document.body.removeChild(toolTip);
-		document.body.removeChild(toolTipTail);
+		removeTooltip();
 		return;
 	}
-	
+
 	const anchorNode = selection.anchorNode;
 	const focusNode = selection.focusNode;
 
@@ -42,8 +60,7 @@ articleElement.onmouseup = (event) => {
 
 	const rangeRect = selection.getRangeAt(0).getClientRects()[0];
 	
-	document.body.appendChild(toolTip);
-	document.body.appendChild(toolTipTail);
+	addTooltip();
 
 	const toolTipWidth = toolTip.offsetWidth;
 	const toolTipHeight = toolTip.offsetHeight;
@@ -58,4 +75,4 @@ articleElement.onmouseup = (event) => {
 
 	toolTipTail.style.top = `${y - toolTipTailHeight/2}px`;
 	toolTipTail.style.left = `${middleX - toolTipTailWidth/2}px`;
-}
+});
