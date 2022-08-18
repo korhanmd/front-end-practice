@@ -34,6 +34,11 @@ const articleElement = document.getElementsByClassName("article")[0];
 
 function removeTooltip() {
 	if (document.body.contains(toolTip)) {
+		toolTip.style.top = null;
+		toolTip.style.left = null;
+		toolTipTail.style.top = null;
+		toolTipTail.style.left = null;
+		
 		document.body.removeChild(toolTip);
 		document.body.removeChild(toolTipTail);
 	}
