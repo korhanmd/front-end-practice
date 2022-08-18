@@ -37,8 +37,6 @@ function displayTooltip() {
 	const anchorNode = selection.anchorNode;
 	const focusNode = selection.focusNode;
 
-	const rangeRect = selection.getRangeAt(0).getClientRects()[0];
-
 	document.body.appendChild(toolTip);
 	document.body.appendChild(toolTipTail);
 
@@ -47,14 +45,20 @@ function displayTooltip() {
 	const toolTipTailWidth = toolTipTail.offsetWidth;
 	const toolTipTailHeight = toolTipTail.offsetHeight;
 
-	const y = rangeRect.y;
-	const middleX = rangeRect.x + (rangeRect.width/2);
+	const rangeRects = selection.getRangeAt(0).getClientRects();
+
+	const parentElement = selection.anchorNode.parentElement;
+	const y = rangeRects[0].y;
+	const x = rangeRects.length > 1 ?
+    	parentElement.offsetLeft + parentElement.offsetWidth/2 :
+    	rangeRects[0].x + rangeRects[0].width/2;
+
 
 	toolTip.style.top = `${y - toolTipHeight - toolTipTailHeight/2}px`;
-	toolTip.style.left = `${middleX - toolTipWidth/2}px`;
+	toolTip.style.left = `${x - toolTipWidth/2}px`;
 
 	toolTipTail.style.top = `${y - toolTipTailHeight/2}px`;
-	toolTipTail.style.left = `${middleX - toolTipTailWidth/2}px`;
+	toolTipTail.style.left = `${x - toolTipTailWidth/2}px`;
 }
 
 document.onmouseup = () => {
@@ -75,7 +79,6 @@ document.addEventListener("selectionchange", function(event) {
 
 	if (selection.anchorNode != selection.focusNode) {
 		// Cross-paragraph selection
-		selectionQueued = false;
 		return;
 	}
 
