@@ -23,13 +23,6 @@ toolTipTail.classList.add("tooltip__tail");
 
 const articleElement = document.getElementsByClassName("article")[0];
 
-const mousedownData = {x: null, y: null};
-
-articleElement.onmousedown = (event) => {
-	mousedownData.x = event.clientX;
-	mousedownData.y = event.clientY;
-}
-
 function removeTooltip() {
 	if (document.body.contains(toolTip)) {
 		document.body.removeChild(toolTip);
@@ -37,9 +30,39 @@ function removeTooltip() {
 	}
 }
 
-function addTooltip() {
+let selectionQueued = false;
+
+function displayTooltip() {
+	const selection = document.getSelection();
+	const anchorNode = selection.anchorNode;
+	const focusNode = selection.focusNode;
+
+	const rangeRect = selection.getRangeAt(0).getClientRects()[0];
+
 	document.body.appendChild(toolTip);
 	document.body.appendChild(toolTipTail);
+
+	const toolTipWidth = toolTip.offsetWidth;
+	const toolTipHeight = toolTip.offsetHeight;
+	const toolTipTailWidth = toolTipTail.offsetWidth;
+	const toolTipTailHeight = toolTipTail.offsetHeight;
+
+	const y = rangeRect.y;
+	const middleX = rangeRect.x + (rangeRect.width/2);
+
+	toolTip.style.top = `${y - toolTipHeight - toolTipTailHeight/2}px`;
+	toolTip.style.left = `${middleX - toolTipWidth/2}px`;
+
+	toolTipTail.style.top = `${y - toolTipTailHeight/2}px`;
+	toolTipTail.style.left = `${middleX - toolTipTailWidth/2}px`;
+}
+
+document.onmouseup = () => {
+	if (selectionQueued) {
+		displayTooltip();
+	}
+
+	selectionQueued = false;
 }
 
 document.addEventListener("selectionchange", function(event) {
@@ -50,29 +73,11 @@ document.addEventListener("selectionchange", function(event) {
 		return;
 	}
 
-	const anchorNode = selection.anchorNode;
-	const focusNode = selection.focusNode;
-
-	if (anchorNode != focusNode) {
+	if (selection.anchorNode != selection.focusNode) {
 		// Cross-paragraph selection
+		selectionQueued = false;
 		return;
 	}
 
-	const rangeRect = selection.getRangeAt(0).getClientRects()[0];
-	
-	addTooltip();
-
-	const toolTipWidth = toolTip.offsetWidth;
-	const toolTipHeight = toolTip.offsetHeight;
-	const toolTipTailWidth = toolTipTail.offsetWidth;
-	const toolTipTailHeight = toolTipTail.offsetHeight;
-
-	const y = rangeRect.y;
-	const middleX = rangeRect.x + (rangeRect.width/2);
-	
-	toolTip.style.top = `${y - toolTipHeight - toolTipTailHeight/2}px`;
-	toolTip.style.left = `${middleX - toolTipWidth/2}px`;
-
-	toolTipTail.style.top = `${y - toolTipTailHeight/2}px`;
-	toolTipTail.style.left = `${middleX - toolTipTailWidth/2}px`;
+	selectionQueued = true;
 });
