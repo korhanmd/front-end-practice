@@ -18,6 +18,9 @@ const toolTip = document.createElement("div");
 toolTip.classList.add("tooltip");
 toolTip.innerHTML = svgs;
 
+const toolTipTail = document.createElement("div");
+toolTipTail.classList.add("tooltip__tail");
+
 document.onmouseup = () => {
 	const selection = document.getSelection();
 	const anchorNode = selection.anchorNode;
@@ -28,15 +31,22 @@ document.onmouseup = () => {
 		return;
 	}
 
-	const selectedText = anchorNode.data.substring(selection.anchorOffset, selection.focusOffset);
-
 	const rangeRect = selection.getRangeAt(0).getClientRects()[0];
 	
 	document.body.appendChild(toolTip);
+	document.body.appendChild(toolTipTail);
+
 	const toolTipWidth = toolTip.offsetWidth;
 	const toolTipHeight = toolTip.offsetHeight;
+	const toolTipTailWidth = toolTipTail.offsetWidth;
+	const toolTipTailHeight = toolTipTail.offsetHeight;
+
 	const y = rangeRect.y;
 	const middleX = rangeRect.x + (rangeRect.width/2);
-	toolTip.style.top = `${y - toolTipHeight}px`;
+	
+	toolTip.style.top = `${y - toolTipHeight - toolTipTailHeight/2}px`;
 	toolTip.style.left = `${middleX - toolTipWidth/2}px`;
+
+	toolTipTail.style.top = `${y - toolTipTailHeight/2}px`;
+	toolTipTail.style.left = `${middleX - toolTipTailWidth/2}px`;
 }
