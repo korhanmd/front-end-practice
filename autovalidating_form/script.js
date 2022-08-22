@@ -3,6 +3,11 @@ function validateName(name) {
     return nameRegex.test(name);
 }
 
+function validateUsername(username) {
+    const usernameRegex = /^[a-zA-Z0-9._]+$/;
+    return usernameRegex.test(username);
+}
+
 function validate(event) {
     const inputElement = event.target;
     inputElement.classList.add('signup__field__input--error');
