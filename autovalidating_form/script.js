@@ -1,3 +1,8 @@
+function validateName(name) {
+    const nameRegex = /^[a-zA-Z]+$/;
+    return nameRegex.test(name);
+}
+
 function validate(event) {
     const inputElement = event.target;
     inputElement.classList.add('signup__field__input--error');
