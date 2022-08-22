@@ -1,11 +1,3 @@
-function isValidName(name) {
-	return;
-}
-
-function isValidEmail(email) {
-	return;
-}
-
 // Unit Tests
 
 function runTests() {
@@ -37,13 +29,13 @@ function firstNameTest() {
 	runner({
 		inputs: validInputs,
 		expectedOutputs: validInputs.map(_ => true),
-		func: isValidName
+		func: validateName
 	});
 
 	runner({
 		inputs: invalidInputs,
 		expectedOutputs: invalidInputs.map(_ => false),
-		func: isValidName
+		func: validateName
 	});
 }
 
@@ -54,12 +46,12 @@ function emailTest() {
 	runner({
 		inputs: validEmails,
 		expectedOutputs: validEmails.map(_ => true),
-		func: isValidEmail
+		func: validateEmail
 	});
 
 	runner({
 		inputs: invalidEmails,
 		expectedOutputs: invalidEmails.map(_ => false),
-		func: isValidEmail
+		func: validateEmail
 	});
 }
