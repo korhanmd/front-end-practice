@@ -8,6 +8,21 @@ function validateUsername(username) {
     return usernameRegex.test(username);
 }
 
+function validateEmail(email) {
+    const emailRegex = /^[a-zA-Z0-9]{1}[a-zA-Z0-9@._-]+[a-zA-Z]$/;
+    if (!emailRegex.test(email)) {
+        return false;
+    }
+    const necessaryEmailCharacters = ['@', '.'];
+    for (const necessaryEmailCharacter of necessaryEmailCharacters) {
+        if (!email.includes(necessaryEmailCharacter)) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
 function validate(event) {
     const inputElement = event.target;
     inputElement.classList.add('signup__field__input--error');
