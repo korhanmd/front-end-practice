@@ -12,24 +12,71 @@ function validateName(name) {
     }
 }
 
-function validateUsername(username) {
-    const usernameRegex = /^[a-zA-Z0-9._]+$/;
-    return usernameRegex.test(username);
-}
-
 function validateEmail(email) {
     const emailRegex = /^[a-zA-Z0-9]{1}[a-zA-Z0-9@._-]+[a-zA-Z]$/;
     if (!emailRegex.test(email)) {
-        return false;
+        throw new ValidationError('Please enter a valid email');
     }
     const necessaryEmailCharacters = ['@', '.'];
     for (const necessaryEmailCharacter of necessaryEmailCharacters) {
         if (!email.includes(necessaryEmailCharacter)) {
-            return false;
+            throw new ValidationError('Please enter a valid email');
+        }
+    }
+}
+
+function validateUsername(username) {
+    const usernameRegex = /^[a-zA-Z0-9._]+$/;
+    if (!usernameRegex.test(username)) {
+        throw new ValidationError('Please enter a valid username');
+    }
+}
+
+function validateDay(day) {
+    const dayRegex = /^[0-9]{1,2}$/;
+    if (!dayRegex.test(day)) {
+        throw new ValidationError('Please enter a valid day');
+    }
+}
+
+function validateYear(year) {
+    const yearRegex = /^[0-9]{4}$/;
+    if (!yearRegex.test(year)) {
+        throw new ValidationError('Please enter a valid year');
+    }
+}
+
+function validatePhoneNumber(phoneNumber) {
+    const FORMATTING_CHARACTERS = ['(', ')', '-'];
+
+    function validateFormattedNumber() {
+        const regex = /^[0-9(]{1}[0-9)-]+[0-9]$/;
+        const hasOpeningParentheses = phoneNumber.includes('(');
+        const hasClosingParentheses = phoneNumber.includes(')');
+
+        if (hasOpeningParentheses && !hasClosingParentheses) {
+            throw new ValidationError('Phone number missing closing parantheses');
+        }
+
+        if (!regex.test(phoneNumber)) {
+            throw new ValidationError('Please enter valid phone number');
         }
     }
 
-    return true;
+    function validateNonformattedNumber() {
+        const regex = /^[0-9]+$/;
+        if (!regex.test(phoneNumber)) {
+            throw new ValidationError('Please enter a valid phone number');
+        }
+    }
+
+    for (const formattingCharacter of FORMATTING_CHARACTERS) {
+        if (phoneNumber.includes(formattingCharacter)) {
+            return validateFormattedNumber();
+        }
+    }
+
+    validateNonformattedNumber();
 }
 
 const validationMapping = {
@@ -45,8 +92,9 @@ function validate(event) {
     const inputElement = event.target;
 
     const field = inputElement.dataset.field;
+    console.log(field);
 
-    if (field === 'password') {
+    if (field === 'password' || field === 'confirmPassword') {
         // TODO: Something special
         return;
     }
