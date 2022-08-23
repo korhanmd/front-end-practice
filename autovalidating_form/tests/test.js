@@ -5,16 +5,21 @@ function runTests() {
 	emailTest();
 }
 
-runTests();
-
 function runner({inputs, expectedOutputs, func}) {
 	let results = "";
 	for (let i = 0; i < inputs.length; i++) {
-		const passFailString = func(inputs[i]) === expectedOutputs[i] ?
-			'Pass' :
-			'<span style="color: red">Fail</span>';
-
-		const result =  `${func.name}(${inputs[i]}) === ${expectedOutputs[i]}: ${passFailString}`;
+		try {
+			func(inputs[i]);
+			result = `${func.name}(${inputs[i]}) passes`;
+			if (!expectedOutputs[i]) {
+				result = `<span style="color: red">${result}</span>`;
+			}
+		} catch (err) {
+			result = `${func.name}(${inputs[i]}) fails with message: ${err.message}`;
+			if (expectedOutputs[i]) {
+				result = `<span style="color: red">${result}</span>`;
+			}
+		}
 		results += (result + "<br>");
 	}
 
@@ -55,3 +60,5 @@ function emailTest() {
 		func: validateEmail
 	});
 }
+
+runTests();
