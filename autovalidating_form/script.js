@@ -88,23 +88,20 @@ const validationMapping = {
     'phoneNumber': validatePhoneNumber
 }
 
-function validate(event) {
-    const inputElement = event.target;
-
+function validate(inputElement) {
     const field = inputElement.dataset.field;
-    console.log(field);
 
     if (field === 'password' || field === 'confirmPassword') {
         // TODO: Something special
         return;
     }
 
-    const errorMessageElement = event.target.parentElement.getElementsByClassName('signup__field__error')[0];
+    const errorMessageElement = inputElement.parentElement.parentElement.getElementsByClassName('signup__field__error')[0];
 
     try {
         validationMapping[field](inputElement.value);
         errorMessageElement.innerHTML = '';
-        inputElement.classList.remove('signup__field__input--error');
+        inputElement.classList.remove('signup__field__inputs__input--error');
     } catch (err) {
         if (!(err instanceof ValidationError)) {
             // Log real error
@@ -112,13 +109,13 @@ function validate(event) {
         }
 
         errorMessageElement.innerHTML = err.message;
-        inputElement.classList.add('signup__field__input--error');
+        inputElement.classList.add('signup__field__inputs__input--error');
     }
 
 }
 
-const inputs = document.getElementsByClassName('signup__field__input');
+const inputs = document.getElementsByClassName('signup__field__inputs__input');
 
 for (const input of inputs) {
-    input.onblur = validate;
+    input.onblur = (event) => validate(event.target);
 }
