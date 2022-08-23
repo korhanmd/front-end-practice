@@ -133,7 +133,6 @@ function validate(inputElement) {
         errorMessageElement.innerHTML = err.message;
         inputElement.classList.add('signup__field__inputs__input--error');
     }
-
 }
 
 const inputs = document.getElementsByClassName('signup__field__inputs__input');
@@ -243,6 +242,54 @@ function updateGuide(inputElement) {
     guide.update(inputElement.value);
 }
 
+// Restrictions
+
+function isNumberRestricted({event, maxNum}) {
+    const specialKeys = ['Enter', 'Backspace'];
+    if (specialKeys.includes(event.key)) {
+        return false;
+    }
+
+    const proposedInput = event.target.value + event.key;
+    if (proposedInput.length > maxNum) {
+        return true;
+    }
+
+    const numberRegex = /^[0-9]+$/;
+    if (!numberRegex.test(proposedInput)) {
+        return true;
+    }
+
+    return false;
+}
+
+function isYearInputRestricted(event) {
+    return isNumberRestricted({event, maxNum: 4});
+}
+
+function isDayInputRestricted(event) {
+    return isNumberRestricted({event, maxNum: 2});
+}
+
+const restrictionMapping = {
+    'year': isYearInputRestricted,
+    'day': isDayInputRestricted
+}
+
+function restrict(event) {
+    const field = event.target.dataset.field;
+    const restriction = restrictionMapping[field];
+
+    if (!restriction) {
+        return;
+    }
+
+    const isRestricted = restriction(event);
+    if (isRestricted) {
+        event.preventDefault();
+    }
+}
+
 for (const input of inputs) {
     input.onblur = (event) => {
         validate(event.target);
@@ -251,4 +298,5 @@ for (const input of inputs) {
 
     input.onfocus = (event) => showGuide(event.target);
     input.onkeyup = (event) => updateGuide(event.target);
+    input.onkeydown = restrict;
 }
