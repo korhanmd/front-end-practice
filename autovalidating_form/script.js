@@ -300,3 +300,65 @@ for (const input of inputs) {
     input.onkeyup = (event) => updateGuide(event.target);
     input.onkeydown = restrict;
 }
+
+const monthSelectorTemplate = `
+    <ul class='signup__selector__list'>
+        <li data-month='1' data-field='month-selection' class='signup__selector__list__item'>January</li> 
+        <li data-month='2' data-field='month-selection' class='signup__selector__list__item'>February</li> 
+    </ul>
+`;
+
+function setMonth(event) {
+    const month = event.target.dataset.month;
+    const hiddenMonthInput = document.getElementsByClassName('signup__field__inputs__input--birth-month')[0];
+    hiddenMonthInput.value = month;
+
+    const visibleMonthInput = document.getElementsByClassName('signup__field__inputs__selection--month')[0];
+    visibleMonthInput.innerHTML = event.target.innerHTML;
+
+    hideMonthSelection();
+}
+
+function showMonthSelection(event) {
+    const element = event.target;
+    const x = element.offsetLeft;
+    const y = element.offsetTop;
+    const monthSelector = document.createElement('div');
+
+    monthSelector.dataset.field = 'month-selector';
+    monthSelector.classList.add('signup__selector');
+    monthSelector.innerHTML = monthSelectorTemplate;
+    monthSelector.style.left = `${x}px`;
+    monthSelector.style.top = `${y}px`;
+    document.body.appendChild(monthSelector);
+
+    for (const monthItem of monthSelector.children[0].children) {
+        monthItem.onclick = setMonth;
+    }
+}
+
+function hideMonthSelection() {
+    const monthSelector = document.getElementsByClassName('signup__selector')[0];
+    if (!monthSelector) {
+        return;
+    }
+
+    for (const monthItem of monthSelector.children[0].children) {
+        monthItem.removeEventListener('click', setMonth);
+    }
+
+    document.body.removeChild(monthSelector);
+}
+
+function onAnywhereClick(event) {
+    const field = event.target && event.target.dataset && event.target.dataset.field;
+
+    if (field !== 'month' && field !== 'month-selection') {
+        hideMonthSelection();
+    }
+}
+
+const monthSelectElement = document.getElementsByClassName('signup__field__inputs__selection--month')[0];
+monthSelectElement.onclick = showMonthSelection;
+
+document.body.onclick = onAnywhereClick;
