@@ -12,6 +12,24 @@ function validateName(name) {
     }
 }
 
+function validatePassword(password) {
+    if (!password) {
+        throw new ValidationError('Password cannot be empty');
+    }
+
+    if (password.length < 6) {
+        throw new ValidationError('Password length too short');
+    }
+}
+
+function validateConfirmPassword(password) {
+    const currentPassword = document.getElementsByClassName('signup__field__inputs__input--password')[0].value;
+
+    if (password && password !== currentPassword) {
+        throw new ValidationError('Password did not match');
+    }
+}
+
 function validateEmail(email) {
     const emailRegex = /^[a-zA-Z0-9]{1}[a-zA-Z0-9@._-]+[a-zA-Z]$/;
     if (!emailRegex.test(email)) {
@@ -85,15 +103,17 @@ const validationMapping = {
     'username': validateUsername,
     'day': validateDay,
     'year': validateYear,
-    'phoneNumber': validatePhoneNumber
+    'phoneNumber': validatePhoneNumber,
+    'password': validatePassword,
+    'confirmPassword': validateConfirmPassword
 }
 
 function validate(inputElement) {
     const field = inputElement.dataset.field;
 
-    if (field === 'password' || field === 'confirmPassword') {
-        // TODO: Something special
-        return;
+    if (field === 'password') {
+        const confirmPassword = document.getElementsByClassName('signup__field__inputs__input--confirm-password')[0];
+        validate(confirmPassword);
     }
 
     const errorMessageElement = inputElement.parentElement.parentElement.getElementsByClassName('signup__field__error')[0];
