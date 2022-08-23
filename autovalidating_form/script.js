@@ -32,15 +32,29 @@ function validateEmail(email) {
     return true;
 }
 
+const validationMapping = {
+    'name': validateName,
+    'email': validateEmail,
+    'username': validateUsername,
+    'day': validateDay,
+    'year': validateYear,
+    'phoneNumber': validatePhoneNumber
+}
+
 function validate(event) {
     const inputElement = event.target;
 
     const field = inputElement.dataset.field;
 
+    if (field === 'password') {
+        // TODO: Something special
+        return;
+    }
+
     const errorMessageElement = event.target.parentElement.getElementsByClassName('signup__field__error')[0];
 
     try {
-        validateName(inputElement.value);
+        validationMapping[field](inputElement.value);
         errorMessageElement.innerHTML = '';
         inputElement.classList.remove('signup__field__input--error');
     } catch (err) {
@@ -48,7 +62,7 @@ function validate(event) {
             // Log real error
             throw err;
         }
-        
+
         errorMessageElement.innerHTML = err.message;
         inputElement.classList.add('signup__field__input--error');
     }
