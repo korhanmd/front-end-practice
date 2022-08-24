@@ -1,23 +1,28 @@
 .tweet {
 	width: 38rem;
-	background: grey;
 	position: relative;
+	border: 1px solid grey;
 }
 
-.tweet__main__header {
-	background: green;
+.tweet__main {
+	font-family: Helvetica;
+	width: 25rem;
 }
 
 .tweet__main__header__item {
 	display: inline-block;
 }
 
-.tweet__main__message {
-	background: purple;
+.tweet__main__header__item--name {
+	font-size: 15px;
+	font-weight: bold;
 }
 
-.tweet__footer {
-	background: orange;
+
+.tweet__main__header__item--handle,
+.tweet__main__header__item--duration {
+	font-weight: 200;
+	color: lightgrey;
 }
 
 .tweet__footer__stats {
@@ -29,18 +34,13 @@
 	display: inline-block;
 }
 
-
 .tweet__column {
 	display: inline-block;
 }
 
 .tweet__icon {
-	width: 1rem;
-}
-
-.tweet__main {
-	width: 25rem;
-	background: red;
+	width: 1.5rem;
+	vertical-align: middle;
 }
 
 .tweet__menu {
@@ -49,12 +49,22 @@
 	top: 1rem;
 }
 
+.tweet__menu:hover {
+	cursor: pointer;
+}
+
+.tweet__menu__icon {
+	width: 1rem;
+}
+
 .avatar {
-	width: 10rem;
-	background: blue;
+	width: 6rem;
 	vertical-align: top;
+	text-align: center;
 }
 
 .avatar__image {
-	width: 100%;
+	border-radius: 50%;
+	width: 4rem;
+	height: 4rem;
 }
