@@ -27,7 +27,19 @@ class Database {
 	}
 
 	query({lastTweetId, pageSize}) {
-		// TODO
+		if (!lastTweetId) {
+			return this.tweets.slice(0, pageSize);
+		}
+
+		for (let i = 0; i < this.tweets.length; i++) {
+			const currentTweet = this.tweets[i];
+
+			if (currentTweet.id === lastTweetId) {
+				return.this.tweets.slice(i + 1, i + 1 + pageSize);
+			}
+		}
+
+		return [];
 	}
 
 	insert(tweet) {
