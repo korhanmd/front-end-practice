@@ -92,6 +92,11 @@ function postFunction(url, data, callback) {
 	callback(endpoints[endpoint]["post"](data));
 }
 
+const api = {
+	get: getFunction,
+	post: postFunction
+};
+
 function loadTestData() {
 	const sampleData = [];
 	const sampleDataSize = 20;
