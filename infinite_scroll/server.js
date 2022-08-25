@@ -43,7 +43,11 @@ class Database {
 	}
 
 	insert(tweet) {
-		// TODO
+		this.tweets.push({
+			tweet,
+			id: getRandomString({length: 50}),
+			timestamp: (new Date()).getTime()
+		});
 	}
 }
 
