@@ -18,11 +18,14 @@
 	font-weight: bold;
 }
 
-
 .tweet__main__header__item--handle,
 .tweet__main__header__item--duration {
 	font-weight: 200;
 	color: lightgrey;
+}
+
+.tweet__main__message {
+	overflow-wrap: break-word;
 }
 
 .tweet__footer__stats {
