@@ -1,7 +1,7 @@
 // Server
 
 function getRandomString({length, includeSpaces}) {
-	const characterChoices = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 ";
+	let characterChoices = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 ";
 	
 	if (includeSpaces) {
 		characterChoices += ' ';
@@ -35,7 +35,7 @@ class Database {
 			const currentTweet = this.tweets[i];
 
 			if (currentTweet.id === lastTweetId) {
-				return.this.tweets.slice(i + 1, i + 1 + pageSize);
+				return this.tweets.slice(i + 1, i + 1 + pageSize);
 			}
 		}
 
