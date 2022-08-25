@@ -29,3 +29,10 @@ class Database {
 		// TODO
 	}
 }
+
+const endpoints = {
+	"/tweets": {
+		"get": getTweetsHandler,
+		"post": postTweetHandler
+	}
+}
