@@ -54,3 +54,41 @@ const endpoints = {
 		"post": postTweetHandler
 	}
 }
+
+function loadTestData() {
+	const sampleData = [];
+	const sampleDataSize = 20;
+
+	for (let i = 0; i < sampleDataSize; i++) {
+		const message = getRandomString({
+			length: getRandomInteger({min: 10, max: 150}),
+			includeSpaces: true
+		});
+
+		const firstName = getRandomString({
+			length: getRandomInteger({min: 3, max: 7}),
+			includeSpaces: false
+		});
+
+		const lastName = getRandomString({
+			length: getRandomInteger({min: 3, max: 7}),
+			includeSpaces: false
+		});
+
+		const handle = '@' + getRandomString({
+			length: getRandomInteger({min: 4, max: 8}),
+			includeSpaces: false
+		});
+
+		sampleData.push({
+			tweet: {
+				name: `${firstName} ${lastName}`,
+				message, handle
+			}
+		});
+	}
+
+	for (const data of sampleData) {
+		api.post(HOST + 'tweets', data, () => {});
+	}
+}
