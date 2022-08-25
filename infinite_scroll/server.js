@@ -15,3 +15,17 @@ function getRandomString({length}) {
 function getRandomInteger({min, max}) {
 	return Math.floor(Math.random() * (max - min) + min);
 }
+
+class Database {
+	constructor() {
+		this.tweets = [];
+	}
+
+	query({lastTweetId, pageSize}) {
+		// TODO
+	}
+
+	insert(tweet) {
+		// TODO
+	}
+}
