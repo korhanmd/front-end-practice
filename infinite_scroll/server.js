@@ -1,7 +1,12 @@
 // Server
 
-function getRandomString({length}) {
+function getRandomString({length, includeSpaces}) {
 	const characterChoices = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 ";
+	
+	if (includeSpaces) {
+		characterChoices += ' ';
+	}
+
 	const characters = [];
 
 	while (characters.length < length) {
