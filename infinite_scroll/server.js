@@ -134,3 +134,60 @@ function loadTestData() {
 		api.post(HOST + 'tweets', data, () => {});
 	}
 }
+
+function createTweet({name, handle, message}) {
+	const template = `
+   		<div class="tweet">
+			<div class="tweet__column avatar">
+        		<img class="avatar__image" src="images/dog.jpeg" />
+      		</div>
+      		<div class="tweet__column tweet__main">
+        		<div class="tweet__main__header">
+          			<div class="tweet__main__header__item tweet__main__header__item--name">
+            			${name}
+          			</div>
+          			<div class="tweet__main__header__item tweet__main__header__item--badge">
+            			<img class="tweet__icon tweet__main__header__item__badge" src="images/footer_icon.svg">
+          			</div>
+          			<div class="tweet__main__header__item tweet__main__header__item--handle">
+            			${handle}
+          			</div>
+          			<div class="tweet__main__header__item tweet__main__header__item--duration">
+            			7h
+          			</div>
+        		</div>
+        		<div class="tweet__main__message">
+          			${message}
+        		</div>
+        		<div class="tweet__footer">
+          			<div class="tweet__footer__stats">
+            			<img class="tweet__icon tweet__footer__stats__item" src="images/footer_icon.svg" />
+            			<div class="tweet__footer__stats__item">
+              				10
+            			</div>
+          			</div>
+          			<div class="tweet__footer__stats">
+            			<img class="tweet__icon tweet__footer__stats__item" src="images/footer_icon.svg" />
+            			<div class="tweet__footer__stats__item">
+              				900
+            			</div>
+          			</div>
+          			<div class="tweet__footer__stats">
+            			<img class="tweet__icon tweet__footer__stats__item" src="images/footer_icon.svg" />
+            			<div class="tweet__footer__stats__item">
+              				1.1K
+            			</div>
+          			</div>
+          			<div class="tweet__footer__stats">
+            			<img class="tweet__icon tweet__footer__stats__item" src="images/footer_icon.svg" />
+          			</div>
+        		</div>
+      		</div>
+      		<div class="tweet__menu">
+        		<img class="tweet__icon tweet__menu__icon" src="images/down_icon.svg">
+      		</div>
+    	</div>
+  `;
+
+  return template;
+}
