@@ -7,7 +7,8 @@ const DEFAULT_SORT_ORDER = 'recent';
 
 const States = {
     PENDING: 'pending',
-    READY: 'ready'
+    READY: 'ready',
+    BACKOFF: 'backoff'
 };
 
 let componentState = States.READY;
@@ -26,6 +27,11 @@ function setReady() {
     document.body.removeChild(loadingElement);
 }
 
+function setBackoff() {
+    componentState = States.BACKOFF;
+    document.body.removeChild(loadingElement);
+}
+
 let lastTweetId = null;
 
 const loadingElement = document.createElement('div');
@@ -36,17 +42,22 @@ loadingElement.innerHTML = `
 `;
 
 function onNewTweets(data) {
-    setReady();
+    if (data.length <= 1) {
+        setBackoff();
+        setTimeout(() => setReady(), 2000);
+    } else {
+        setReady();
 
-    let tweetsHTML = '';
+        let tweetsHTML = '';
 
-    for (const tweetResponse of data) {
-        const tweet = createTweet(tweetResponse.tweet);
-        tweetsHTML += tweet;
-        lastTweetId = tweetResponse.id;
+        for (const tweetResponse of data) {
+            const tweet = createTweet(tweetResponse.tweet);
+            tweetsHTML += tweet;
+            lastTweetId = tweetResponse.id;
+        }
+
+        document.body.innerHTML += tweetsHTML;
     }
-
-    document.body.innerHTML += tweetsHTML;
 }
 
 function hydrate() {
@@ -71,7 +82,7 @@ function onScroll(event) {
     const scrollLimit = document.body.offsetHeight;
     const scrollThreshold = 30;
 
-    if (scrollLimit - scrolledTo <= scrollThreshold) {
+    if (scrollLimit - scrolledTo <= scrollThreshold && componentState != 'backoff') {
         const params = {
             pageSize: DEFAULT_PAGE_SIZE,
             sortOrder: DEFAULT_SORT_ORDER,
