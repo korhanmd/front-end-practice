@@ -12,12 +12,9 @@ const States = {
 
 let componentState = States.READY;
 
-const loadingElement = document.createElement('div');
-loadingElement.classList.add('tweet');
-loadingElement.innerHTML = `
-    Here I am... Loading...
-    <img class="loading__image" src="images/dog.jpeg" />
-`;
+function isComponentPending() {
+    return componentState === States.PENDING;
+}
 
 function setPending() {
     componentState = States.PENDING;
@@ -29,6 +26,15 @@ function setReady() {
     document.body.removeChild(loadingElement);
 }
 
+let lastTweetId = null;
+
+const loadingElement = document.createElement('div');
+loadingElement.classList.add('tweet');
+loadingElement.innerHTML = `
+    Here I am... Loading...
+    <img class="loading__image" src="images/dog.jpeg" />
+`;
+
 function onNewTweets(data) {
     setReady();
 
@@ -37,9 +43,10 @@ function onNewTweets(data) {
     for (const tweetResponse of data) {
         const tweet = createTweet(tweetResponse.tweet);
         tweetsHTML += tweet;
+        lastTweetId = tweetResponse.id;
     }
 
-    document.body.innerHTML = tweetsHTML;
+    document.body.innerHTML += tweetsHTML;
 }
 
 function hydrate() {
@@ -54,3 +61,26 @@ function hydrate() {
 
 loadTestData();
 hydrate();
+
+function onScroll(event) {
+    if (isComponentPending()) {
+        return;
+    }
+
+    const scrolledTo = window.innerHeight + window.pageYOffset;
+    const scrollLimit = document.body.offsetHeight;
+    const scrollThreshold = 30;
+
+    if (scrollLimit - scrolledTo <= scrollThreshold) {
+        const params = {
+            pageSize: DEFAULT_PAGE_SIZE,
+            sortOrder: DEFAULT_SORT_ORDER,
+            lastTweetId
+        };
+
+        api.get(HOST + 'tweets', params, onNewTweets);
+        setPending();
+    }
+}
+
+window.addEventListener('scroll', onScroll);
