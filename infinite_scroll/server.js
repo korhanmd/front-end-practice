@@ -82,7 +82,7 @@ function getFunction(url, data, callback) {
 	const domain = url.substring(0, url.indexOf("/"));
 	const endpoint = url.substring(url.indexOf("/"), url.length);
 
-	callback(endpoints[endpoint]["get"](data));
+	setTimeout(() => callback(endpoints[endpoint]["get"](data)), 2000);
 }
 
 function postFunction(url, data, callback) {
